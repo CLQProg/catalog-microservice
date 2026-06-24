@@ -27,7 +27,14 @@ The microservice exposes the company's catalog query APIs
   ```
 
 ### How to run the app
-
+To build the image of the app in docker, just use those commands in the root of the project:
+```
+mvn clean package
+```
+and then:
+```
+docker build .
+```
 Run the application with your IDE and launch GET HTTP requests to http://localhost:8080/catalog
 with the following mandatory parameters in the form of a query: productId, brandId and a date.
 The easiest way is to use the Swagger UI: http://localhost:8080/swagger-ui/index.html
