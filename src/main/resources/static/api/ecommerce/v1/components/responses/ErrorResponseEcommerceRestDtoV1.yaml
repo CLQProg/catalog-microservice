@@ -1,0 +1,32 @@
+type: object
+description: Standard error response body.
+
+required:
+  - status
+  - error
+  - message
+  - timestamp
+
+properties:
+
+  status:
+    type: integer
+    format: int32
+    description: HTTP status code.
+
+  error:
+    type: string
+    description: Short HTTP status description.
+
+  message:
+    type: string
+    description: Human-readable explanation of the error.
+
+  timestamp:
+    type: string
+    format: date-time
+    description: Date and time at which the error occurred.
+
+  path:
+    type: string
+    description: Request path that triggered the error.

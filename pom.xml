@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>es.technical.test.microservices</groupId>
+    <artifactId>catalog-microservice</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>catalog</name>
+    <description>Technical test solution</description>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.0</version>
+        <relativePath/>
+    </parent>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>25</java.version>
+        <maven.compiler.release>25</maven.compiler.release>
+        <!-- MAVEN -->
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
+        <!-- DB -->
+        <flyway.version>12.9.0</flyway.version>
+        <caffeine.version>3.2.4</caffeine.version>
+        <!-- API FIRST -->
+        <springdoc-openapi-starter-webmvc-ui.version>3.0.3</springdoc-openapi-starter-webmvc-ui.version>
+        <openapi-generator-maven-plugin.version>7.23.0</openapi-generator-maven-plugin.version>
+        <jackson-databind-nullable.version>0.2.10</jackson-databind-nullable.version>
+        <!-- DEV TOOLS -->
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
+        <lombok.version>1.18.46</lombok.version>
+        <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
+        <!-- UT TESTING -->
+        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+        <podam.version>8.0.2.RELEASE</podam.version>
+        <!-- IT TESTING -->
+        <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
+        <karate.version>2.1.0</karate.version>
+        <!-- COVERAGE -->
+        <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+        <surefire.jacoco.args/>
+        <failsafe.jacoco.args/>
+        <!-- ANALYSIS -->
+        <maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
+        <sonar-maven-plugin.version>5.7.0.6970</sonar-maven-plugin.version>
+        <spotbugs-maven-plugin.version>4.10.2.0</spotbugs-maven-plugin.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <!-- Persistence -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-h2console</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- CACHÉ -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>${caffeine.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- OpenAPI -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+
+        <!-- Tools -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.jemos.podam</groupId>
+            <artifactId>podam</artifactId>
+            <version>${podam.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.karatelabs</groupId>
+            <artifactId>karate-core</artifactId>
+            <version>${karate.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- Maven plugins -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.mapstruct</groupId>
+                                    <artifactId>mapstruct-processor</artifactId>
+                                    <version>${org.mapstruct.version}</version>
+                                </path>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                    <version>${lombok.version}</version>
+                                    <version>${lombok.version}</version>
+                                </path>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok-mapstruct-binding</artifactId>
+                                    <version>${lombok.mapstruct.binding.version}</version>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Spring Boot plugins -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <!-- OpenAPI generator -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/static/api/ecommerce/v1/openapi.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <generateApis>true</generateApis>
+                            <generateModels>true</generateModels>
+                            <apiPackage>es.technical.test.microservices.catalog.openapi.api</apiPackage>
+                            <modelPackage>es.technical.test.microservices.catalog.openapi.model</modelPackage>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <documentationProvider>springdoc</documentationProvider>
+                                <delegatePattern>true</delegatePattern>
+                                <serializableModel>true</serializableModel>
+                                <useJakartaEe>true</useJakartaEe>
+                                <useSpringBoot4>true</useSpringBoot4>
+                                <generateBuilders>true</generateBuilders>
+                                <includeHttpRequestContext>true</includeHttpRequestContext>
+                                <unhandledException>true</unhandledException>
+                                <useEnumCaseInensitive>true</useEnumCaseInensitive>
+                                <useJackson3>true</useJackson3>
+                                <useJspecify>true</useJspecify>
+                                <useSwaggerUI>true</useSwaggerUI>
+                                <useTags>true</useTags>
+                                <library>spring-boot</library>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- UT -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/ut/**/*</include>
+                            </includes>
+                            <skipTests>false</skipTests>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- IT -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+            </plugin>
+
+            <!-- CODE ANALYSIS -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <profile>
+            <id>codeAnalysis</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${sonar-maven-plugin.version}</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs-maven-plugin</artifactId>
+                        <version>${spotbugs-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>spotbugs-check</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Profile to add coverage to the UT and IT/E2E API testing -->
+        <profile>
+            <id>coverage</id>
+            <activation>
+                <property>
+                    <name>!skipCoverage</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco-maven-plugin.version}</version>
+                        <executions>
+                            <!-- UT -->
+                            <execution>
+                                <id>before-unit-test-execution</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <destFile>${project.build.directory}/site/jacoco/unit-tests.exec</destFile>
+                                    <propertyName>surefire.jacoco.args</propertyName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>after-unit-test-execution</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/site/jacoco/unit-tests.exec</dataFile>
+                                    <outputDirectory>
+                                        ${project.reporting.outputDirectory}/jacoco/unit-test-coverage-report
+                                    </outputDirectory>
+                                </configuration>
+                            </execution>
+                            <!-- IT -->
+                            <execution>
+                                <id>before-integration-test-execution</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <destFile>${project.build.directory}/site/jacoco/integration-tests.exec</destFile>
+                                    <propertyName>failsafe.jacoco.args</propertyName>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>after-integration-test-execution</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/site/jacoco/integration-tests.exec</dataFile>
+                                    <outputDirectory>
+                                        ${project.reporting.outputDirectory}/jacoco/integration-test-coverage-report
+                                    </outputDirectory>
+                                </configuration>
+                            </execution>
+                            <!-- Merged Report -->
+                            <execution>
+                                <id>merge-unit-and-integration</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>merge</goal>
+                                </goals>
+                                <configuration>
+                                    <fileSets>
+                                        <fileSet>
+                                            <directory>${project.build.directory}/site/jacoco/</directory>
+                                            <includes>
+                                                <include>*.exec</include>
+                                            </includes>
+                                        </fileSet>
+                                    </fileSets>
+                                    <destFile>${project.build.directory}/site/jacoco/merged.exec</destFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>create-merged-report</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/site/jacoco/merged.exec</dataFile>
+                                    <outputDirectory>
+                                        ${project.reporting.outputDirectory}/jacoco/merged-test-coverage-report
+                                    </outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- UT -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <argLine>@{surefire.jacoco.args}</argLine>
+                            <skipTests>false</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                                <configuration>
+                                    <argLine>@{failsafe.jacoco.args}</argLine>
+                                    <classesDirectory>
+                                        ${project.build.directory}/${project.artifactId}-${project.version}.jar.original
+                                    </classesDirectory>
+                                    <includes>
+                                        <include>**/it/**</include>
+                                    </includes>
+                                    <skipTests>false</skipTests>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>

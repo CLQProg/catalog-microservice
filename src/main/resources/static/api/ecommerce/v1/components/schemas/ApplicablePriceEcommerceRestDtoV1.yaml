@@ -1,0 +1,64 @@
+type: object
+description: Price applied to a product for a specific brand and date range.
+
+required:
+  - productId
+  - brandId
+  - startDate
+  - endDate
+  - priceId
+  - amount
+  - currency
+
+properties:
+
+  productId:
+    type: integer
+    format: int64
+    description: Unique identifier of the product.
+    minimum: 1
+    example: 35455
+
+  brandId:
+    type: integer
+    format: int64
+    description: Identifier of the brand group chain (e.g. 1 = ZARA).
+    minimum: 1
+    example: 1
+
+  priceId:
+    type: integer
+    format: int64
+    description: Identifier of the applicable amount.
+    minimum: 1
+    example: 1
+
+  startDate:
+    type: string
+    format: date-time
+    description: Start date-time from which this amount is applicable (inclusive).
+    example: "2019-06-14T00:00:00Z"
+
+  endDate:
+    type: string
+    format: date-time
+    description: End date-time until which this amount is applicable (inclusive).
+    example: "2024-06-14T00:00:00Z"
+
+  price:
+    type: number
+    format: double
+    description: Final sale amount to be applied. Must be a positive value.
+    minimum: 0.01
+    exclusiveMinimum: true
+    multipleOf: 0.01
+    example: 44.90
+
+  currency:
+    type: string
+    description: ISO 4217 currency code for the amount value.
+    minLength: 3
+    maxLength: 3
+    pattern: "^[A-Z]{3}$"
+    default: EUR
+    example: EURy

@@ -1,0 +1,17 @@
+openapi: 3.0.1
+
+info:
+  title: Catalog Microservice
+  description: >-
+    This microservice exposes the company's catalog query APIs.
+  contact:
+    email: carlos.lencina.q@gmail.com
+  version: 1.0.0
+
+tags:
+  - name: catalog
+
+paths:
+
+  /api/ecommerce/v1/brands/{brandId}/products/{productId}/price:
+    $ref: './paths/prices.yaml'

@@ -1,0 +1,35 @@
+spring.application.name: catalog
+---
+springdoc.swagger-ui:
+  path: /swagger-ui/index.html
+  urls:
+    - name: E-commerce API v1
+      url: /api/ecommerce/v1/openapi.yaml
+---
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.jdbc.time_zone: UTC
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  h2.console.enabled: true
+---
+spring.cache:
+  type: caffeine
+  cache-names:
+    - "CatalogMicroservice:Prices"
+  caffeine:
+    spec: expireAfterWrite=60s
+---
+logging:
+  level:
+    root: INFO
+    org.springframework.cache: TRACE
+    org.springframework.cache.interceptor: TRACE
+
+---
+spring.jackson.time-zone: UTC
+

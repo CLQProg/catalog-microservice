@@ -1,0 +1,67 @@
+get:
+  tags:
+    - prices ecommerce v1
+  summary: Get the applicable price for a product by brand and date
+  description: >
+    Returns the applicable price for a given product, brand and date.
+    If multiple prices overlap, the one with the highest priority is returned.
+  operationId: findProductApplicablePriceByBrandIdAndDate
+
+  parameters:
+    - name: brandId
+      in: path
+      description: Unique identifier of the brand group chain (e.g. 1 = ZARA).
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 1
+    - name: productId
+      in: path
+      description: Unique identifier of the product.
+      required: true
+      schema:
+        type: integer
+        format: int64
+        example: 35455
+    - name: date
+      in: query
+      description: >
+        Date and time at which the price must be applicable.
+        Must be provided in ISO 8601 format (e.g. 2019-06-14T10:00:00Z).
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: "2020-06-14T10:00:00Z"
+
+  responses:
+    "200":
+      description: Price applicable for the given product, brand and date.
+      content:
+        application/json:
+          schema:
+            $ref: "../components/schemas/ApplicablePriceEcommerceRestDtoV1.yaml"
+
+    "400":
+      description: >
+        Bad request. The provided parameters are missing, malformed,
+        or fail validation (e.g. invalid date format).
+      content:
+        application/json:
+          schema:
+            $ref: "../components/responses/ErrorResponseEcommerceRestDtoV1.yaml"
+
+    "404":
+      description: No applicable price found for the given combination of brand, product and date.
+      content:
+        application/json:
+          schema:
+            $ref: "../components/responses/ErrorResponseEcommerceRestDtoV1.yaml"
+
+    "500":
+      description: Unexpected internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: "../components/responses/ErrorResponseEcommerceRestDtoV1.yaml"
